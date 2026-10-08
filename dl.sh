@@ -34,10 +34,34 @@ H="${QUALITY:+[height<=$QUALITY]}"
 FMT="bv*${H}[vcodec^=avc1]+ba[ext=m4a]/bv*${H}+ba/b${H}/b"
 
 # downloads/<ngày tải>/<tên video [id]>/<tên video [id]>.mp4
-NAME='%(epoch>%Y-%m-%d)s/%(title).120B [%(id)s]'
-NAME_FILE='%(title).120B [%(id)s]'
+NAME='%(epoch>%Y-%m-%d)s/%(fname).120B [%(id)s]'
+NAME_FILE='%(fname).120B [%(id)s]'
+
+# Tên file/folder không dấu: chép title sang field fname rồi bỏ dấu tiếng Việt
+# (title nhúng trong mp4 vẫn giữ nguyên có dấu)
+NODIACRITIC=(
+  --parse-metadata 'title:(?P<fname>.+)'
+  --replace-in-metadata fname '[àáạảãâầấậẩẫăằắặẳẵ]' a
+  --replace-in-metadata fname '[ÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴ]' A
+  --replace-in-metadata fname '[èéẹẻẽêềếệểễ]' e
+  --replace-in-metadata fname '[ÈÉẸẺẼÊỀẾỆỂỄ]' E
+  --replace-in-metadata fname '[ìíịỉĩ]' i
+  --replace-in-metadata fname '[ÌÍỊỈĨ]' I
+  --replace-in-metadata fname '[òóọỏõôồốộổỗơờớợởỡ]' o
+  --replace-in-metadata fname '[ÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠ]' O
+  --replace-in-metadata fname '[ùúụủũưừứựửữ]' u
+  --replace-in-metadata fname '[ÙÚỤỦŨƯỪỨỰỬỮ]' U
+  --replace-in-metadata fname '[ỳýỵỷỹ]' y
+  --replace-in-metadata fname '[ỲÝỴỶỸ]' Y
+  --replace-in-metadata fname 'đ' d
+  --replace-in-metadata fname 'Đ' D
+  --replace-in-metadata fname '[^A-Za-z0-9 ._()\[\]-]+' ' '
+  --replace-in-metadata fname '\s+' ' '
+  --replace-in-metadata fname '^ | $' ''
+)
 
 ARGS=(
+  "${NODIACRITIC[@]}"
   --ffmpeg-location "$FFMPEG"
   -f "$FMT"
   --merge-output-format mp4 --remux-video mp4
