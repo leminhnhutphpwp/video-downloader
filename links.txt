@@ -1,0 +1,1 @@
+# Mỗi dòng 1 link YouTube/Facebook, dòng bắt đầu bằng # sẽ bỏ qua
