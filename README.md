@@ -19,7 +19,8 @@ Cần [uv](https://docs.astral.sh/uv/). Nếu có `node` trong PATH, tool tự d
 ./dl.sh "<link>"                 # chất lượng cao nhất
 ./dl.sh -q 720 "<link>"          # tối đa 720p
 ./dl.sh -f links.txt             # tải theo danh sách (mỗi dòng 1 link)
-./dl.sh -c chrome "<link>"       # dùng cookie trình duyệt (FB riêng tư, YT giới hạn tuổi)
+./dl.sh -c chromium "<link>"     # dùng cookie trình duyệt (FB riêng tư, YT giới hạn tuổi)
+                                 # YouTube báo "not a bot" thì tool tự lấy cookie trình duyệt và tải lại
 ./dl.sh -o ~/Videos "<link>"     # đổi thư mục lưu
 ./dl.sh -t "<link>"              # tải xong tự tách lời
 ./dl.sh -m medium "<link>"       # như -t, dùng model chính xác hơn
