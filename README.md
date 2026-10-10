@@ -24,20 +24,31 @@ Cần [uv](https://docs.astral.sh/uv/). Nếu có `node` trong PATH, tool tự d
 ./dl.sh -t "<link>"              # tải xong tự tách lời
 ./dl.sh -m medium "<link>"       # như -t, dùng model chính xác hơn
 ./dl.sh -u                       # cập nhật yt-dlp
+./dl.sh -h                       # hướng dẫn đầy đủ
 ```
 
-Link đã tải sẽ được bỏ qua (`downloads/.archive.txt`).
+Tên file/folder không dấu. Link đã tải sẽ được bỏ qua (`downloads/.archive.txt`). Luôn để link trong `"..."`.
 
 ## Tách lời
 
 ```bash
-./tach.sh                          # tách mọi video trong downloads/ chưa có transcript
-./tach.sh "<file.mp4 | thư mục>"
-./tach.sh -m medium -l vi "<file>" # model chính xác hơn, ép tiếng Việt
-./tach.sh --force "<file>"         # tách lại
+./tach.sh -m medium -l vi "downloads/2026-10-08/<tên video>"   # nên dùng cho tiếng Việt
+./tach.sh                                  # tách mọi video trong downloads/ chưa có transcript
+./tach.sh "downloads/2026-10-08"           # tách tất cả video tải trong ngày đó
+./tach.sh --force "<folder>"               # tách lại
+./tach.sh -h                               # hướng dẫn đầy đủ
 ```
 
-Model: `tiny`, `base`, `small` (mặc định), `medium`, `large-v3`. Trên CPU, `medium` mất khoảng 0.7× thời lượng video. Tên riêng nước ngoài thường bị phiên âm sai, nên rà lại.
+Đưa vào folder hoặc file `.mp4` đều được. Đường dẫn có dấu cách nên để trong `"..."`.
+
+| Model (`-m`) | Ghi chú | Video 1 tiếng mất khoảng (CPU) |
+|---|---|---|
+| `tiny` | rất nhanh, sai nhiều | 5 phút |
+| `small` | mặc định | 15 phút |
+| `medium` | nên dùng cho tiếng Việt | 40 phút |
+| `large-v3` | chính xác nhất | 90 phút |
+
+Lúc chạy, terminal báo thời gian ước tính rồi in dần từng câu kèm % tiến độ. Dừng bằng `Ctrl+C`. Tên riêng nước ngoài hay bị phiên âm sai, nên đọc lại.
 
 ## Cấu trúc lưu
 
